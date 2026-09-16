@@ -1,0 +1,49 @@
+# Version 1 Brute force
+class Solution(object):
+    def twoSum(self, nums, target):
+        """
+        :type nums: List[int]
+        :type target: int
+        :rtype: List[int]
+        """
+
+        for i, x in enumerate(nums):
+            for j, y in enumerate(nums):
+                if i >= j:
+                    continue
+                if x + y == target:
+                    return [i, j]
+# Version 2 
+class Solution(object):
+    def twoSum(self, nums, target):
+        """
+        :type nums: List[int]
+        :type target: int
+        :rtype: List[int]
+        """
+        mirrored_nums = [-1 * (x - target) for x in nums]
+        print(mirrored_nums)
+        values = set(nums) & set(mirrored_nums)
+        if len(values) == 3:
+            values.remove(target/2)
+        if len(values) == 2:
+            x, y = values
+            return sorted([nums.index(x), nums.index(y)])
+        if len(values) == 1:
+            return [i for i, v in enumerate(nums) if v == target/2]
+
+
+# Version 3
+class Solution(object):
+    def twoSum(self, nums, target):
+        """
+        :type nums: List[int]
+        :type target: int
+        :rtype: List[int]
+        """
+        hash_table = dict()
+        for i, x in enumerate(nums):
+            substraction = target - x
+            if substraction in hash_table and hash_table[substraction] != i:
+                return [hash_table[substraction], i]
+            hash_table[x] = i
