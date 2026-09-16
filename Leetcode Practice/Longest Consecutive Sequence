@@ -1,0 +1,72 @@
+# Version 1: Brute force
+class Solution(object):
+    def longestConsecutive(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        sorted_nums = sorted(nums)
+        
+        counter, longest_consecutive = 0, 0
+        for i, j in zip(sorted_nums, sorted_nums[1:] + sorted_nums[:1]):
+            print(j,i)
+            if j - i == 1:
+                counter += 1
+                continue
+            if j - i == 0:
+                continue
+            if counter > longest_consecutive:
+                longest_consecutive = counter
+            counter = 0
+        return longest_consecutive + 1
+
+# Version 2 Wrong, doesn't cover case [1,2,6,7,8] (two subconscutive)
+class Solution(object):
+    def longestConsecutive(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        unique_nums = set(nums)
+        incremented_nums = {x + 1 for x in unique_nums}
+        return len(unique_nums & incremented_nums) + 1
+
+# Version 3
+class Solution(object):
+    def longestConsecutive(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        if not nums:
+            return 0
+        
+        unique_nums = set(nums)
+        counter, longest = 0, 0
+
+        while unique_nums:
+            random_num = unique_nums.pop()
+            counter += 1
+            
+            up = random_num + 1
+            while up:
+                try:
+                    unique_nums.remove(up)
+                    counter += 1
+                    up += 1
+                except KeyError:
+                    up = None
+
+            down = random_num - 1
+            while down:
+                try:
+                    unique_nums.remove(down)
+                    counter += 1
+                    down -= 1
+                except KeyError:
+                    down = None
+
+            if counter > longest:
+                longest = counter
+            counter = 0
+        return longest
