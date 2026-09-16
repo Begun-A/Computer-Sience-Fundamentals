@@ -1,4 +1,6 @@
-# Version 1 Sliding window(Two pointers subtype)
+# Algorithm pattern: Sliding window (Two pointers subtype)
+
+# Version 1 
 class Solution(object):
     def lengthOfLongestSubstring(self, s):
         """
