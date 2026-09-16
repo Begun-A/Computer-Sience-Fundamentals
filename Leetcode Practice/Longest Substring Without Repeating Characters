@@ -1,0 +1,17 @@
+# Version 1 Sliding window(Two pointers subtype)
+class Solution(object):
+    def lengthOfLongestSubstring(self, s):
+        """
+        :type s: str
+        :rtype: int
+        """
+        seen = set()
+        max_length, left = 0, 0
+        for right in range(len(s)):
+            while s[right] in seen:
+                seen.remove(s[left])
+                left += 1
+            
+            seen.add(s[right])
+            max_length = max(max_length, right - left + 1)
+        return max_length
