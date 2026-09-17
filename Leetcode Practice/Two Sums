@@ -1,6 +1,11 @@
 # Algorithm pattern: Array & Hashing
 
-# Version 1 Brute force
+# Task:
+# You are given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target.
+# You may assume that each input would have exactly one solution, and you may not use the same element twice.
+# You can return the answer in any order.
+
+# Version 3
 class Solution(object):
     def twoSum(self, nums, target):
         """
@@ -8,13 +13,13 @@ class Solution(object):
         :type target: int
         :rtype: List[int]
         """
-
+        hash_table = dict()
         for i, x in enumerate(nums):
-            for j, y in enumerate(nums):
-                if i >= j:
-                    continue
-                if x + y == target:
-                    return [i, j]
+            substraction = target - x
+            if substraction in hash_table and hash_table[substraction] != i:
+                return [hash_table[substraction], i]
+            hash_table[x] = i
+
 # Version 2 
 class Solution(object):
     def twoSum(self, nums, target):
@@ -35,7 +40,7 @@ class Solution(object):
             return [i for i, v in enumerate(nums) if v == target/2]
 
 
-# Version 3
+# Version 1 Brute force
 class Solution(object):
     def twoSum(self, nums, target):
         """
@@ -43,9 +48,10 @@ class Solution(object):
         :type target: int
         :rtype: List[int]
         """
-        hash_table = dict()
+
         for i, x in enumerate(nums):
-            substraction = target - x
-            if substraction in hash_table and hash_table[substraction] != i:
-                return [hash_table[substraction], i]
-            hash_table[x] = i
+            for j, y in enumerate(nums):
+                if i >= j:
+                    continue
+                if x + y == target:
+                    return [i, j]
