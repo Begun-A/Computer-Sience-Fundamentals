@@ -1,29 +1,10 @@
 # Algorithm pattern: Array & Hashing
 
+# Task:
+# Given an unsorted array of integers nums, return the length of the longest consecutive elements sequence.
+# You must write an algorithm that runs in O(n) time.
 
-# Version 1: Brute force
-class Solution(object):
-    def longestConsecutive(self, nums):
-        """
-        :type nums: List[int]
-        :rtype: int
-        """
-        sorted_nums = sorted(nums)
-        
-        counter, longest_consecutive = 0, 0
-        for i, j in zip(sorted_nums, sorted_nums[1:] + sorted_nums[:1]):
-            print(j,i)
-            if j - i == 1:
-                counter += 1
-                continue
-            if j - i == 0:
-                continue
-            if counter > longest_consecutive:
-                longest_consecutive = counter
-            counter = 0
-        return longest_consecutive + 1
-
-# Version 2 Wrong, doesn't cover case [1,2,6,7,8] (two subconscutive)
+# Version 4
 class Solution(object):
     def longestConsecutive(self, nums):
         """
@@ -31,8 +12,16 @@ class Solution(object):
         :rtype: int
         """
         unique_nums = set(nums)
-        incremented_nums = {x + 1 for x in unique_nums}
-        return len(unique_nums & incremented_nums) + 1
+        longest = 0
+
+        for n in unique_nums:
+            counter = 1
+            if (n-1) in unique_nums:
+                continue
+            while (n + counter) in unique_nums:
+                counter += 1
+            longest = longest if counter < longest else counter 
+        return longest
 
 # Version 3
 class Solution(object):
@@ -73,3 +62,39 @@ class Solution(object):
                 longest = counter
             counter = 0
         return longest
+
+
+# Version 2 Wrong, doesn't cover case [1,2,6,7,8] (two subconscutive)
+class Solution(object):
+    def longestConsecutive(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        unique_nums = set(nums)
+        incremented_nums = {x + 1 for x in unique_nums}
+        return len(unique_nums & incremented_nums) + 1
+
+
+
+# Version 1: Brute force
+class Solution(object):
+    def longestConsecutive(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        sorted_nums = sorted(nums)
+        
+        counter, longest_consecutive = 0, 0
+        for i, j in zip(sorted_nums, sorted_nums[1:] + sorted_nums[:1]):
+            print(j,i)
+            if j - i == 1:
+                counter += 1
+                continue
+            if j - i == 0:
+                continue
+            if counter > longest_consecutive:
+                longest_consecutive = counter
+            counter = 0
+        return longest_consecutive + 1
