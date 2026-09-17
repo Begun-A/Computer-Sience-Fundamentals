@@ -1,5 +1,8 @@
 # Algorithm pattern: Sliding window (Two pointers subtype)
 
+# Task:
+# Given a string s, find the length of the longest substring without duplicate characters.
+
 # Version 1 
 class Solution(object):
     def lengthOfLongestSubstring(self, s):
