@@ -1,7 +1,71 @@
-# Algorithm pattern: 
+# Algorithm pattern: 1-D Dynamic Programing
 
 # Task:
 # Given a string s, return the longest palindromic substring in s.
+
+# Version 3
+class Solution(object):
+    def longestPalindrome(self, s):
+        """
+        :type s: str
+        :rtype: str
+        """
+        if not s:
+            return s
+        
+        max_pl = ""
+        max_pl_length = 1
+        
+        def expand_center(left, right):
+            while left >=0 and right < len(s) and s[left] == s[right]:
+                left -= 1
+                right += 1
+            return right - (left + 1)
+        
+        for i in range(len(s)):
+            # Odd-lenght palindrom
+            c1_l = expand_center(i, i)
+
+            # Even-lenght palindrom
+            c2_l = expand_center(i, i + 1)
+            
+            max_c = max(c1_l, c2_l)
+
+            if max_c > max_pl_length:
+                start = i - (max_c - 1)//2
+                max_pl_length = max_c
+        
+        return s[start: start + max_pl_length]
+
+        
+# Version 2
+class Solution(object):
+    def longestPalindrome(self, s):
+        """
+        :type s: str
+        :rtype: str
+        """
+        max_pl = ""
+        max_pl_length = 0
+        
+        def expand_center(left, right):
+            while left >=0 and right < len(s) and s[left] == s[right]:
+                left -= 1
+                right += 1
+            return left, right
+        
+        for i in range(len(s)):
+            l1, r1 = expand_center(i, i)
+            l2, r2 = expand_center(i, i + 1)
+            l1 += 1
+            l2 += 1
+
+            pl = s[l1: r1] if r1 - l1 > r2 - l2 else s[l2: r2]
+            if len(pl) > max_pl_length:
+                max_pl_length = len(pl)
+                max_pl = pl
+        
+        return max_pl
 
 # Version 1
 class Solution(object):
