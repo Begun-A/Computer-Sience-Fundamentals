@@ -1,0 +1,60 @@
+# Algorithm patter: 1-D Dynamic programming
+
+# Task:
+# You are climbing a staircase. It takes n steps to reach the top.
+# Each time you can either climb 1 or 2 steps. In how many distinct ways can you climb to the top?
+
+# Version 2 Fibonacci numbers
+class Solution(object):
+    def climbStairs(self, n):
+        """
+        :type n: int
+        :rtype: int
+        """
+        if n <= 2:
+            return n
+
+        c1 = 1
+        c2 = 2
+        current = 3
+        for _ in range(3, n + 1):
+            current = c1 + c2
+            c1 = c2
+            c2 = current
+        return current
+
+# Version 1 (doesn't work)
+class Solution(object):
+    def climbStairs(self, n):
+        """
+        :type n: int
+        :rtype: int
+        """
+        if n < 2:
+            return n
+
+
+
+        sums = {1, 2}
+        counter = 0
+        while sums:
+            l = sorted(list(sums.copy()), reverse=True)
+            print(l)
+            for i in l:
+                if i == n:
+                    counter += 1
+                    sums.remove(i)
+                    print(sums)
+                if i + 1 <= n:
+                    if i + 1 in sums:
+                        counter += 1
+                    else:
+                        sums.remove(i)
+                        sums.add(i+1)
+                if i + 2 <= n:
+                    if i + 2 in sums:
+                        counter += 1
+                    else:
+                        sums.remove(i)
+                        sums.add(i+2)
+        return counter
