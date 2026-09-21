@@ -1,0 +1,47 @@
+# Algorithm pattern: Two Pointers
+
+# Task:
+# Given a string s, return the number of palindromic substrings in it.
+# A string is a palindrome when it reads the same backward as forward.
+# A substring is a contiguous sequence of characters within the string.
+
+# Version 2 Two Pointers
+class Solution(object):
+    def maxArea(self, height):
+        """
+        :type height: List[int]
+        :rtype: int
+        """
+        max_area = 0
+        def count_area(i, j, h):
+            return (j - i) * min(h[i], h[j])
+        
+        left = 0
+        right = len(height) - 1
+        while left != right:
+                max_area = max(count_area(left, right, height), max_area)
+                if height[left] < height[right]:
+                    left += 1
+                else:
+                    right -= 1
+        return max_area
+                
+# Version 1 Brute force 
+class Solution(object):
+    def maxArea(self, height):
+        """
+        :type height: List[int]
+        :rtype: int
+        """
+        max_area = 0
+        def count_area(i, j, h):
+            return (j - i) * min(h[i], h[j])
+        
+
+        for i in range(len(height)):
+            for j in range(len(height)):
+                if j < i:
+                    continue
+                max_area = max(count_area(i, j, height), max_area)
+        return max_area
+                
