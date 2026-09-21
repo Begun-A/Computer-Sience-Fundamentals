@@ -1,0 +1,28 @@
+# Algorithm pattern: 1-D Dinamic Programming
+
+# Task:
+# Given a string s and a dictionary of strings wordDict, return true if s can be segmented into a space-separated sequence of one or more dictionary words.
+# Note that the same word in the dictionary may be reused multiple times in the segmentation.
+
+# Version 1 
+# Doesn't work case: s = "aaaaaaa", wordDict = ["aaaa","aaa"]
+class Solution(object):
+    def wordBreak(self, s, wordDict):
+        """
+        :type s: str
+        :type wordDict: List[str]
+        :rtype: bool
+        """
+        hash_map = {w for w in wordDict}
+
+        left, right = 0, 0
+        word = ""
+        while right !=  len(s):
+            word += s[right]
+            if word in hash_map:
+                right += 1
+                left = right
+                word = ""
+            else:
+                right += 1
+        return not word
