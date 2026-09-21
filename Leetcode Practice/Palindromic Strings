@@ -1,0 +1,31 @@
+# Algorithm pattern: 1-D Dynamic Programing
+
+# Task: Given a string s, return the number of palindromic substrings in it.
+# A string is a palindrome when it reads the same backward as forward.
+# A substring is a contiguous sequence of characters within the string.
+
+# Version 1  1-D Dynamic Programing
+class Solution(object):
+    def countSubstrings(self, s):
+        """
+        Solution is 1-D Dynamic Programing. Space complexity O(1) and time complaxity O(n)
+        :type s: str
+        :rtype: int
+        """
+        if len(s) <= 1:
+            return len(s)
+        
+        counter = 0
+        def is_palindromic(left, right, s):
+            c = 0
+            while left >= 0 and right < len(s) and s[left] == s[right]:
+               c += 1
+               left -= 1
+               right += 1
+            return c
+        
+        for i in range(len(s)):
+            counter += is_palindromic(i, i, s)
+            counter += is_palindromic(i, i+1, s)
+        
+        return counter
