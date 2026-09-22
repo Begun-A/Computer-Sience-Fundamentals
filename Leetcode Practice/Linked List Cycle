@@ -1,0 +1,41 @@
+# Algorithm pattern: Linked list
+
+# Task:
+
+# Version 1 Optimal
+class Solution(object):
+    def hasCycle(self, head):
+        """
+        :type head: ListNode
+        :rtype: bool
+        """
+        if not head:
+            return False
+        
+        visited = {head}
+        next_node = head.next
+        while next_node:
+            if next_node in visited:
+                return True
+            visited.add(next_node)
+            next_node = next_node.next
+        return False
+
+# Version 2 Recursion
+class Solution(object):
+    def __init__(self):
+        self.visited = set()
+
+    def hasCycle(self, head):
+        """
+        :type head: ListNode
+        :rtype: bool
+        """
+        if not head:
+            return False
+        
+        if head in self.visited:
+            return True
+            
+        self.visited.add(head)
+        return self.hasCycle(head.next)
