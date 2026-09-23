@@ -1,0 +1,32 @@
+# Algorithm patter: Bit Manipulation
+
+
+# Task: 
+# Given an array nums containing n distinct numbers in the range [0, n], return the only number in the range that is missing from the array.
+
+# Version 2  XOR ^ bin of numbers
+class Solution(object):
+    def missingNumber(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        result = len(nums)
+        for i, n in enumerate(nums):
+            result = i ^ n ^ result
+        
+        return result
+
+# Version 1  Arrays & Hashing
+class Solution(object):
+    def missingNumber(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        s = set(nums)
+        i = 0
+        while i <= len(nums):
+            if i not in s:
+                return i
+            i += 1
