@@ -1,0 +1,15 @@
+# Algorithm patter: Bit manipulation
+
+# Task: Given a positive integer n, write a function that returns the number of set bits in its binary representation (also known as the Hamming weight).
+
+# Version 1
+class Solution(object):
+    def hammingWeight(self, n):
+        """
+        :type n: int
+        :rtype: int
+        """
+        hw = 0
+        for i in bin(n)[2:]:
+            hw += int(i)
+        return hw
