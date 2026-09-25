@@ -1,0 +1,51 @@
+# Algorithm patter: Stack
+
+# Task: 
+# Given a string s containing just the characters '(', ')', '{', '}', '[' and ']', determine if the input string is valid.
+# An input string is valid if:
+# 1. Open brackets must be closed by the same type of brackets.
+# 2. Open brackets must be closed in the correct order.
+# 3. Every close bracket has a corresponding open bracket of the same type.
+
+# Version 2
+class Solution(object):
+    def isValid(self, s):
+        """
+        :type s: str
+        :rtype: bool
+        """
+        if len(s) % 2:
+            return False
+
+        close_to_open = {')': '(', '}': '{', ']': '['}
+        stack = list()
+        for b in s:
+            if b in close_to_open:
+                if not stack or stack.pop() != close_to_open[b]:
+                    return False
+            else:
+                stack.append(b)
+        return not stack
+
+# Version 1
+class Solution(object):
+    def isValid(self, s):
+        """
+        :type s: str
+        :rtype: bool
+        """
+        if len(s) % 2:
+            return False
+
+        open_b = {'(': 0, '{': 1, '[': 2}
+        close_b = {')': 0, '}': 1, ']': 2}
+        stack = list()
+        for i, b in enumerate(s):
+            if b in open_b:
+                stack.append(b)
+            if b in close_b:
+                if not stack or open_b[stack.pop()] != close_b[b]:
+                    return False
+        if stack:
+            return False
+        return True
