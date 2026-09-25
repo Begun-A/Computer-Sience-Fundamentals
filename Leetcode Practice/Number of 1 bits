@@ -2,6 +2,15 @@
 
 # Task: Given a positive integer n, write a function that returns the number of set bits in its binary representation (also known as the Hamming weight).
 
+# Version 2
+class Solution:
+  def hammingWeight(self, n: int) -> int:
+    res = 0
+    while n:
+      n &= n - 1  # Clears the rightmost 1-bit
+      res += 1
+    return res
+
 # Version 1
 class Solution(object):
     def hammingWeight(self, n):
