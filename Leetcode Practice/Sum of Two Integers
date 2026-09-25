@@ -1,0 +1,52 @@
+# Algorithm pattern: Bit Manipulation
+
+# Task:
+# Given two integers a and b, return the sum of the two integers without using the operators + and -.
+
+# Version 1
+class Solution(object):
+    def getSum(self, a, b):
+        """
+        :type a: int
+        :type b: int
+        :rtype: int
+        """
+        MASK = 0xFFFFFFFF
+        MAX_INT = 0x7FFFFFFF
+        while b != 0:
+            carry= ((a & b) << 1) & MASK
+            a = (a ^ b) & MASK
+            b = carry
+        return a if a <= MAX_INT else ~(a ^ MASK)
+
+# Version 2 more explenation
+class Solution:
+    def getSum(self, a: int, b: int) -> int:
+        # 0xFFFFFFFF is 32 ones in binary (1111...1111).
+        # Hexadecimal is a base-16 number system = 0123456789ABCDEF
+        # Python handles infinitely large integers, so we use this mask
+        # to force the numbers to behave like a standard 32-bit integer.
+        MASK = 0xFFFFFFFF
+        
+        # 0x7FFFFFFF is the maximum positive value for a signed 32-bit integer.
+        # In binary, it is a 0 followed by 31 ones (0111...1111).
+        MAX_INT = 0x7FFFFFFF
+        
+        # We loop until there are no more carries left to add
+        while b != 0:
+            # 1. Find common set bits where BOTH a and b have a 1 (AND operation).
+            #    Then, shift left by 1 because a carry moves to the next column.
+            #    We use & MASK to keep it within 32-bit bounds.
+            carry = ((a & b) << 1) & MASK
+            
+            # 2. Add bits where only ONE of the numbers has a 1 (XOR operation).
+            #    This performs the addition but completely ignores any carries.
+            a = (a ^ b) & MASK
+            
+            # 3. Set b to the carry value so it gets added in the next iteration.
+            b = carry
+            
+        # If the result 'a' is greater than MAX_INT, it means the number is negative
+        # in 32-bit signed format. We convert it back to a Python negative integer.
+        return a if a <= MAX_INT else ~(a ^ MASK)
+
